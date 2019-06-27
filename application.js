@@ -52,7 +52,7 @@ function performMove() {
         }
         Game.turn = 'ai'
 
-        AI.logic(Game)
+        Daniel.logic(Game)
     }
 }
 
