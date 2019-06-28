@@ -132,12 +132,12 @@ var Daniel = {
         // Original AI
 
         if(game.state[6] == '') {
-            game.makeMove(6)
+            game.makeMove(6)                //if space 6 is open take space 6
         } else if(game.state[7] == '') {
-            game.makeMove(7)
+            game.makeMove(7)                //if space 7 is open take space 7
         } else if(game.state[8] == '') {
-            game.makeMove(8)
+            game.makeMove(8)                //if space 8 is open take space 8
         }
-
+        
     }
 }
