@@ -2,15 +2,112 @@ var Daniel = {
     name: 'AI',
     logic: (game) => {
         
-        function print(x) {
-            console.log(x)
+
+        /*
+            FUNCTIONS FOR WINNING
+        */
+       function checkRowsW() {
+        var player_moves = 0
+        var pos = 0
+        var possible_move = null
+        var possible_row = null
+        for(var x = 0; x <= 2; x++) {
+            player_moves = 0
+            pos = 0
+            possible_moves = null
+            possible_rows = null
+            for(var c = 0; c <= 2; c++) {
+                pos = c + 3*x
+                if(game.state[pos] == 'O') {
+                    player_moves++
+                    possible_row = x
+                }
+                if(game.state[pos] == '') {
+                    possible_move = pos
+                }
+            }
+
+            if (player_moves == 2 && possible_move != null){
+              return(possible_move)
+            }
+            
+            console.log('finished checkRows')
+            return
         }
 
-        // Always prevent player to win
-        console.log("hello")
+        function checkColumnsW(){
+            var player_moves = 0
+            var pos = 0
+            var possible_moves = null
+            var posArray = [0,3,6]
+            var possible_columns = null
+            for(var x = 0; x <= 2; x++){
+                for(var c = 0; c <= 2; c ++){
+                    pos = posArray[c] + x
+                    if(game.state[pos == 'O']) {
+                        player_moves++
+                        possible_columns = x
+                    } else if(game.state[pos] == "") {
+                        possible_moves = pos
+                    }
+                    
+                }
+                if(player_moves == 2 && possible_moves != null) {
+                    return(possible_moves)
+                }
+            }
+            console.log('finished check columns')
+            return
+        }
+
+        function checkDiagonalsW() {
+            var d1 = null
+            var d2 = null
+            var pos1 = null
+            var pos2 = null
+            if(game.state[0] == 'O') {
+                d1++
+            } else if (game.state[0] == '') {
+                pos1 = 0
+            }
+            if(game.state[2] == 'O') {
+                d2++
+            } else if (game.state[2] == '') {
+                pos2 = 2
+            }
+            if(game.state[4] == 'O') {
+                d1++
+                d2++
+            } else if (game.state[4] == '') {
+                pos1 = 4
+                pos2 = 4
+            }
+            if(game.state[6] == 'O'){
+                d2++
+            } else if (game.state[6] == '') {
+                pos2 = 6
+            }
+            if(game.state[8] == 'O'){
+                d1++
+            } else if (game.state[8] == '') {
+                pos1 = 8
+            }
+
+            if(d1 == 2) {
+                return(pos1)
+            } else if (d2 == 2) {
+                return(pos2)
+            }
+
+        }
+
+
+        /*
+            FUNCTIONS FOR PREVENTING PLAYER TO WIN
+        */
         //Checks rows
 
-        function checkRows() {
+        function checkRowsL() {
             var player_moves = 0
             var pos = 0
             var possible_move = null
@@ -40,7 +137,7 @@ var Daniel = {
             return
         }
 
-        function checkDiagonal() {
+        function checkDiagonalsL() {
             var d1 = null
             var d2 = null
             var pos1 = null
@@ -81,7 +178,7 @@ var Daniel = {
 
         }
 
-        function checkColumns(){
+        function checkColumnsL(){
             var player_moves = 0
             var pos = 0
             var possible_moves = null
@@ -106,30 +203,7 @@ var Daniel = {
             return
         }
 
-        a = checkColumns()
-        b = checkRows()
-        c = checkDiagonal()
-        d = play_random_position()
-
-        if(a != null) {
-            game.makeMove(a)
-            return
-        }
-        if(b != null) {
-            game.makeMove(b)
-            return
-        }
-        if(c != null) {
-            game.makeMove(c)
-            return
-        }
-        if(d != null) {
-            game.makeMove(d)
-            return
-        }
-        
-
-        //Random AI
+        // PLAYS RANDOM POSITION
 
         function play_random_position() {
             played = false
@@ -166,19 +240,43 @@ var Daniel = {
 
         }
 
-        
+        a1 = checkColumnsL()
+        b1 = checkRowsL()
+        c1 = checkDiagonalsL()
+        a2 = checkColumnsW()
+        b2 = checkRowsW()
+        c2 = checkDiagonalsW()
+        d = play_random_position()
 
-
-
-        // Original AI
-
-        // if(game.state[6] == '') {
-        //     game.makeMove(6)                //if space 6 is open take space 6
-        // } else if(game.state[7] == '') {
-        //     game.makeMove(7)                //if space 7 is open take space 7
-        // } else if(game.state[8] == '') {
-        //     game.makeMove(8)                //if space 8 is open take space 8
-        // }
-        
+        if(a2 != null) {
+            game.makeMove(a)
+            return
+        }
+        if(b2 != null) {
+            game.makeMove(b)
+            return
+        }
+        if(c2 != null) {
+            game.makeMove(c)
+            return
+        }
+        if(a1 != null) {
+            game.makeMove(a)
+            return
+        }
+        if(b1 != null) {
+            game.makeMove(b)
+            return
+        }
+        if(c1 != null) {
+            game.makeMove(c)
+            return
+        }
+        if(d != null) {
+            game.makeMove(d)
+            return
+        }
+      
     }
+}
 }
